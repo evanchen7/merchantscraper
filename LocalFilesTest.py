@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-import stitch, unitest
+import LocalFilesCompetitionChecker, unitest
 
 class TestStitchMethods(unittest.TestCase):
 
-    path = '/Users/evanchen/Development/PythonScripts/target'
+    # Original Files Stem from Margeaux
+    path = 'INSERT PATH TO FILE'
 
     def testRegex(self):
         teststring1 = 'hello world, my name is qUadPay, and of course QUADPAY, quadpay, quadpay'

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import glob, os, datetime, time, regex
 
-class FindAllCompetitors:
+class LocalFilesCompetitionChecker:
     def __init__(self, pathToFolder, fileType, targetWords, merchantName = 'concantenated'):
         if type(pathToFolder) != str and type(fileType) != str or type(targetWords) != list:
             raise TypeError('(pathToFolder, keywords, targetWords, merchantName) need to be (str, list, int, boolean)')
@@ -21,7 +21,6 @@ class FindAllCompetitors:
             for filename in allFolders:
                 splitFileName = os.path.normpath(filename).split(os.path.sep)
                 with open(filename) as infile:
-                    # print(infile)
                     for index, line in enumerate(infile):
                         if patterns.findall(line):
                             outfile.write('filename: {}/{} -----Line: {}'.format(splitFileName[-2], splitFileName[-1], index))
@@ -61,7 +60,7 @@ if __name__ == "__main__":
         keywords = ['affirm', 'afterpay']
         name = 'spirithood'
 
-        test = FindAllCompetitors(path, fileType, keywords, name)
+        test = LocalFilesCompetitionChecker(path, fileType, keywords, name)
         test.grabAllFiles()
         # stichAll(path, ['.liquid', '.png'], name)
         end = time.time()

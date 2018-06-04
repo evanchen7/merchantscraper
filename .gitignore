@@ -11,6 +11,7 @@ venv.bak/
 # Experimental
 merchantCrawler/
 requestBS4.py
+multitest.py
 
 # MacOS Files
 .vscode

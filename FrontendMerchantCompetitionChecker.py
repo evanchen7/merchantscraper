@@ -5,11 +5,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-from multiprocessing import Pool
 
 start = time.time()
 
-class MerchantCompetitionChecker:
+class FrontendMerchantCompetitionChecker:
 
     def __init__(self, website, keywords, linkCount = int(15), headlessMode = False):
         if type(website) != str or type(keywords) != list or type(linkCount) != int:
@@ -106,7 +105,7 @@ class MerchantCompetitionChecker:
 if __name__ == "__main__":
     try:
         website = 'https://www.spirithoods.com'
-        newSelenium = MerchantCompetitionChecker(website, ['afterpay', 'affirm'], 30)
+        newSelenium = FrontendMerchantCompetitionChecker(website, ['afterpay'], 30)
         newSelenium.search()
         newSelenium.driver.quit()
     except KeyboardInterrupt:

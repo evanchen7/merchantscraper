@@ -10,16 +10,6 @@ from bs4 import BeautifulSoup
 
 
 start = time.time()
-# def do_something(number):
-#     return number ** 2
-
-# number_of_workers = 10
-# array_of_numbers = [x for x in range(0, 1000000)]
-
-# with Pool(number_of_workers) as p:
-#     print(p.imap(do_something, array_of_numbers))
-
-# print('Completed in: ', start - time.time())
 
 class SeleniumPooling:
     def __init__(self, website):

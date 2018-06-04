@@ -1,99 +1,122 @@
-# Merchant Competition Scraper
-
+# Merchant Competition Checker
 
 ## Getting Started
 
-
 ### Prerequisites
 
-Check the package.json files for start scripts and dependencies. For this project, you just need two commands:
+In order to run the following scripts, you will need to setup Python 3 on your machine along with its package dependencies.
 
+* [MacOS](http://docs.python-guide.org/en/latest/starting/install3/osx/#install3-osx) - Install Guide
+* [Linux](http://docs.python-guide.org/en/latest/starting/install3/linux/#install3-linux) - Install Guide
+* [Windows](http://docs.python-guide.org/en/latest/starting/install3/win/#install3-windows) - Install Guide
+
+#### Optional (Highly Recommended): Virtualenv
+Virtualenv is a tool that lets you create an isolated Python environment for your project. It creates an environment that has its own installation directories, that doesn’t share dependencies with other virtualenv environments (and optionally doesn’t access the globally installed dependencies either).
+
+To install virtualenv run:
 ```
-npm install
-```
-
-If NPM does not work, you can try using [YARN](https://yarnpkg.com) and running:
-
-```
-yarn install
-```
-
-This will install all the dependencies defined in the package.json file
-
-
-
-## Development/Production
-
-### Access
-
-
-### Docker
-
-
-#### Dockerfile and Docker-Compose
-
-I follow this person's pattern on creating the development instance: https://github.com/nezhar/wordpress-docker-compose
-
-The [docker-compose.yml](docker-compose.yml) file contains the settings I used, some notes:
-* For the wp-data folder, I used a db dump sql file from https://damcms.roidna.com** to seed the development's MySQL instance
-* For the wp-app folder, I already created a docker image of the damcms instance and should already populate with preinstalled themes and plugins
-
-#### Gotchas
-* WP Migrate DB will allow a smoother transition, the plugin will find and replace URLs and File Paths
-* The following commands will help with the file permissions, there are easier ways to automate, but I was fed up with my shell scrips not running inside the docker containers
-
-```
-sudo chmod -R 777 wp-content #Fixes permission outside of docker container
-```
-```
-docker exec -t -i my_instance_name /bin/bash; #Access docker container
-usermod -u 1000 www-data #Give RW access to user 1000
+$ pip install virtualenv
 ```
 
-## Deployment
+This will install the virtual enviroment package
+```
+$ cd my-project/
+$ virtualenv env
+```
+
+These commands create a env/ directory in your project where all dependencies are installed. You need to activate it first though (in every terminal instance where you are working on your project)
+```
+$ source venv/bin/activate
+```
+
+You should see a (env) appear at the beginning of your terminal prompt indicating that you are working inside the virtualenv. Now when you install something like this
+```
+$ pip install <package>
+```
+It will get installed in the env/ folder, and not conflict with other projects.
+
+To leave the virtual enviroment run:
+```
+$ deactivate
+```
+
+#### Installing Dependencies
+
+In order for the scripts to run, a couple dependencies need to be installed.
+
+```
+$ pip install -r requirements.txt
+```
+
+This will install all the dependencies defined in the requirements.txt for the project.
+
+
+## Usage
+
+### LocalFilesCompetitionChecker()
+| Parameters | Type | Description | Example |
+| --- | --- | --- | --- |
+| pathToFolder | String | Relative or Absolute path to theme files | '/Users/evanchen/Desktop/Afterpay'
+| fileType | String | Name of the file extension | '.liquid', '.js' |
+| targetWords | List | Names of competitors, fewer keywords for performant runtime | ['foo', 'afterpay', 'baz', 'bar']
+| merchantName | String | Specifies the name of the output text | Defaults: 'concantenated'|
+
+#### Example Input
+```
+path = '/Users/evanchen/Desktop/Afterpay'
+fileType = ['.liquid']
+keywords = ['affirm', 'afterpay']
+name = 'Afterpay'
+```
+```
+LocalFilesCompetitionChecker(path, fileType, keywords, name)
+```
+```
+$ python LocalFilesCompetitionChecker.py
+```
+
+#### Example Output
+```
+-----BEGIN LOGS-----
+Tue May 29 20:59:08 2018
+
+filename: target/templates/collection.liquid LINE:282                <!-- QuadPay Changes Start -->
+filename: target/templates/collection.liquid LINE:284                  #quadPayCalculatorWidget {
+filename: target/templates/collection.liquid LINE:288                  #quadPayCalculatorWidgetText {
+filename: target/templates/collection.liquid LINE:291                  #quadPayCalculatorWidgetLearn {
+```
+
+### FrontendMerchantCompetitionChecker()
+This script will collect all links found on one page and will search for keywords found in those links. Each link will be rendered by Selenium which will ensure asynchronous javascript loads before scraping the page.
+
+| Parameters | Type | Description | Example |
+| --- | --- | --- | --- |
+| website | String | Name of the target website | 'https://www.example.com' |
+| keywords | List | List of keywords to search for | ['foo', 'baz', 'bar'] |
+| linkCount | Int | Number of links to search for before terminating | 30 |
+| headlessMode | Boolean | Runs headless mode  | Defaults: False |
 
 
 ## Running the tests
-Tests are written for JEST and Enzyme
-```
-yarn test
-```
-```
-npm run test
-```
+Unit tests are created from Python's unittest module.
 
-
-## Styling Guide
-Airbnb Javascript style guide utilized - https://github.com/airbnb/javascript
+Ensure that the path to files are correct
+```
+$ python LocalFilesTest.py
+```
 
 ## Built With
-* [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-* [NodeJS](https://nodejs.org/en/) - JavaScript networking and package management
-* [Docker](https://www.docker.com/) - Cloud container technology used for building and shipping applications
-* [PM2](http://pm2.keymetrics.io/) - A Complete feature set for production environment, built with a worldwide community of developers and enterprises
-* [Semantic UI](https://react.semantic-ui.com) - UI Framework built with React components
-* [WP-API](https://github.com/WP-API/node-wpapi) - A NodeJS library used to interact with Wordpress REST API
-
-## Troubleshooting
-There is some caching weirdness that Wordpress utlizies that messes with CORS, simply perform a hard reload and clear cache.
-<p align='center'>
-    <img src='https://i.imgur.com/IiRI6In.png'>
-</p>
-<p align='center'>
-    <em>Chrome</em>
-</p>
+* [regex](https://pypi.org/project/regex/) - Alternative regular expression module, to replace re.
+* [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/) - Python library for pulling data out of HTML and XML files.
+* [selenium](https://pypi.org/project/selenium/) - Web browser module used to automate web interaction from Python.
 
 ## To Do
-* Complete Pages link
-* Save stitched picture to Express backend and then save to Wordpress CMS
-* Enable Watchtower to listen for any new docker images
-* Unit testing for Wordpress instance
+* Allow functions to run from command line
+* Implement server to run functions
+* Dockerize application
 
 ## Authors
 * **Evan Chen** - *Initial work* - [evanchen7](https://github.com/evanchen7)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-* Original SASS/SCSS by ROI-DNA [ROI-DNA](https://www.roidna.com/)
