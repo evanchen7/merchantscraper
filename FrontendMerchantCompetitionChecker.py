@@ -30,6 +30,8 @@ class FrontendMerchantCompetitionChecker:
             options.add_argument("--headless")
             options.add_argument('--disable-gpu')
 
+        # the driver will search for a chromedriver instance in PATH, you can specify a path as well
+        # self.driver = webdriver.Chrome('/path/to/chromedriver', chrome_options=options)
         self.driver = webdriver.Chrome(chrome_options=options)
 
     def search(self):

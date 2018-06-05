@@ -50,6 +50,14 @@ $ pip install -r requirements.txt
 
 This will install all the dependencies defined in the requirements.txt for the project.
 
+#### Chromedriver for Selenium
+
+Selenium requires a browser driver to navigate webpages, user input, JavaScript, etc: http://chromedriver.chromium.org/
+
+MacOS:
+```
+$ brew cask install chromedriver
+```
 
 ## Usage
 
