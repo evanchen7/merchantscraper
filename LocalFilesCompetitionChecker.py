@@ -21,10 +21,16 @@ class LocalFilesCompetitionChecker:
             for filename in allFolders:
                 splitFileName = os.path.normpath(filename).split(os.path.sep)
                 with open(filename, errors='ignore') as infile:
-                    for line in infile:
+                    for index, line in list(enumerate(infile)):
                         if patterns.findall(line):
-                            outfile.write('filename: {}/{} -----Line: {}'.format(splitFileName[-2], splitFileName[-1], index))
-                            outfile.write(line)
+                            try:
+                                print('filename: {} -----'.format(splitFileName[-1]), int(index))
+                                print(line)
+                                outfile.write(str(splitFileName[-2]) + '/' + str(splitFileName[-1]) + ' Line:' + str(index))
+                                outfile.write(str(line) + '\n')
+                            except:
+                                print('Outfile Error')
+                                pass
             outfile.write("\nTotal file count: {}".format(self.countFiles()))
             outfile.write("\n{}\n-----END LOGS-----\n\n".format(self.getTimeStamp()))
 
@@ -55,10 +61,10 @@ if __name__ == "__main__":
 
         start = time.time()
 
-        path = '/Users/evanchen/Desktop/popandsuki'
+        path = '/Users/evanchen/Desktop/theme_export__sheseeksnomad-com-pipeline__25JUN2018-0358pm'
         fileType = ['.liquid']
-        keywords = ['futurepay']
-        name = 'popandsuki'
+        keywords = ['sezzle']
+        name = 'SheSeeksNomad'
 
         test = LocalFilesCompetitionChecker(path, fileType, keywords, name)
         test.grabAllFiles()
