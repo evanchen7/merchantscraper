@@ -16,12 +16,12 @@ class LocalFilesCompetitionChecker:
         all_files_with_extension = list()
         allFolders = glob.iglob('{}/**/*{}'.format(self.pathToFolder, self.fileType), recursive=True)
 
-        with open("{}.txt".format(self.merchantName),'a+') as outfile:
+        with open("{}/{}.txt".format(self.pathToFolder, self.merchantName),'a+') as outfile:
             outfile.write("\n-----BEGIN LOGS-----\n{}\n\n".format(self.getTimeStamp()))
             for filename in allFolders:
                 splitFileName = os.path.normpath(filename).split(os.path.sep)
-                with open(filename) as infile:
-                    for index, line in enumerate(infile):
+                with open(filename, errors='ignore') as infile:
+                    for line in infile:
                         if patterns.findall(line):
                             outfile.write('filename: {}/{} -----Line: {}'.format(splitFileName[-2], splitFileName[-1], index))
                             outfile.write(line)
@@ -55,10 +55,10 @@ if __name__ == "__main__":
 
         start = time.time()
 
-        path = '/Users/evanchen/Desktop/spirithood'
+        path = '/Users/evanchen/Desktop/popandsuki'
         fileType = ['.liquid']
-        keywords = ['affirm', 'afterpay']
-        name = 'spirithood'
+        keywords = ['futurepay']
+        name = 'popandsuki'
 
         test = LocalFilesCompetitionChecker(path, fileType, keywords, name)
         test.grabAllFiles()
