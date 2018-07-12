@@ -16,3 +16,7 @@ multitest.py
 # MacOS Files
 .vscode
 *.DS_Store
+
+# Secrets
+client_secret*.json
+credentials.json

@@ -15,7 +15,7 @@ Virtualenv is a tool that lets you create an isolated Python environment for you
 
 To install virtualenv run:
 ```
-$ pip install virtualenv
+$ pip3 install virtualenv
 ```
 
 This will install the virtual enviroment package
@@ -26,12 +26,12 @@ $ virtualenv env
 
 These commands create a env/ directory in your project where all dependencies are installed. You need to activate it first though (in every terminal instance where you are working on your project)
 ```
-$ source venv/bin/activate
+$ source env/bin/activate
 ```
 
 You should see a (env) appear at the beginning of your terminal prompt indicating that you are working inside the virtualenv. Now when you install something like this
 ```
-$ pip install <package>
+$ pip3 install requirements.txt
 ```
 It will get installed in the env/ folder, and not conflict with other projects.
 
@@ -45,7 +45,7 @@ $ deactivate
 In order for the scripts to run, a couple dependencies need to be installed.
 
 ```
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 This will install all the dependencies defined in the requirements.txt for the project.

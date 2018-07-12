@@ -61,10 +61,10 @@ if __name__ == "__main__":
 
         start = time.time()
 
-        path = '/Users/evanchen/Desktop/theme_export__sheseeksnomad-com-pipeline__25JUN2018-0358pm'
+        path = '/Users/evanchen/Downloads/theme_export__www-amarilojewelry-com-icon-afterpay-edits__09JUL2018-0502pm'
         fileType = ['.liquid']
         keywords = ['sezzle']
-        name = 'SheSeeksNomad'
+        name = 'Amarilo'
 
         test = LocalFilesCompetitionChecker(path, fileType, keywords, name)
         test.grabAllFiles()
